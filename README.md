@@ -1,27 +1,28 @@
 
 # ETL para Análise de Dados - DOF Transportes de Produtos Florestais
 
-Este repositório contém um projeto para a construção de um processo de ETL (Extração, Transformação e Carga) para preparar dados provenientes do **DOF (Documento de Origem Florestal)**, com o objetivo de realizar uma análise detalhada sobre o transporte de produtos florestais no Brasil.
+Este repositório contém um projeto para a construção de um processo de **ETL (Extração, Transformação e Carga)** para preparar dados provenientes do **DOF (Documento de Origem Florestal)**, com o objetivo de realizar uma análise detalhada sobre o transporte de produtos florestais no Brasil.
 
 ## Objetivo do Projeto
 
-O objetivo deste projeto é processar e preparar o **Dataset Público de DOF - Transportes de Produtos Florestais**, fornecido pelo [IBAMA](https://dadosabertos.ibama.gov.br/dataset/dof-transportes-de-produtos-florestais), para análise de dados. Este processo de ETL será dividido em três etapas:
+O objetivo deste projeto é processar e preparar o **Dataset Público de DOF - Transportes de Produtos Florestais**, fornecido pelo [IBAMA](https://dadosabertos.ibama.gov.br/dataset/dof-transportes-de-produtos-florestais), para análise de dados. O processo de ETL será dividido nas seguintes etapas:
 
-1. **Extração**: Obtenção dos dados do dataset público.
-2. **Transformação**: Limpeza, normalização e enriquecimento dos dados para garantir sua qualidade e relevância para análise.
-3. **Carga**: Carregamento dos dados transformados em um formato adequado para análise, como um banco de dados ou arquivo CSV.
+1. **Extração**: Obtenção dos dados a partir de arquivos JSON.
+2. **Transformação**: Limpeza, normalização e enriquecimento dos dados para garantir a qualidade e relevância para a análise.
+3. **Carga**: Armazenamento dos dados transformados em arquivos CSV prontos para análise.
 
 ## Estrutura do Repositório
 
 ```bash
 ├── data/
-│   ├── raw/               # Dados brutos extraídos
-│   └── processed/         # Dados processados e prontos para análise
+│   ├── raw/               # Dados brutos extraídos (arquivos JSON)
+│   └── processed/         # Dados processados e prontos para análise (arquivos CSV)
 ├── src/
-│   ├── extract.py         # Script de extração dos dados
-│   ├── transform.py       # Script de transformação dos dados
-│   └── load.py            # Script de carga dos dados
+│   ├── etl.py             # Script principal com funções para o processo de ETL
+│   └── pipeline.py        # Pipeline para execução do processo de ETL
+├── output/                # Pasta de saída para arquivos CSV
 ├── requirements.txt       # Dependências do projeto
+├── poetry.lock            # Dependências travadas para garantir reprodutibilidade
 └── README.md              # Este arquivo
 ```
 
@@ -37,44 +38,47 @@ O objetivo deste projeto é processar e preparar o **Dataset Público de DOF - T
 2. Instale as dependências necessárias:
 
    ```bash
-   pip install -r requirements.txt
+   poetry install
    ```
 
-3. Execute os scripts na ordem das etapas de ETL:
+3. Crie um ambiente virtual, caso ainda não tenha:
 
-   - **Extração de Dados**:
-     ```bash
-     python src/extract.py
-     ```
+   ```bash
+   poetry env use python3.11  # Certifique-se de usar a versão correta do Python
+   ```
 
-   - **Transformação de Dados**:
-     ```bash
-     python src/transform.py
-     ```
+4. Ative o ambiente virtual:
 
-   - **Carga de Dados**:
-     ```bash
-     python src/load.py
-     ```
+   ```bash
+   poetry shell
+   ```
+
+5. Execute o pipeline ETL (Extração, Transformação e Carga) com o seguinte comando:
+
+   ```bash
+   python src/pipeline.py
+   ```
+
+Este comando irá executar a sequência completa de processos para obter, transformar e salvar os dados.
 
 ## Dependências
 
 Este projeto utiliza as seguintes bibliotecas:
 
 - `pandas`: Para manipulação e análise de dados.
-- `requests`: Para download dos dados, se necessário.
-- `sqlalchemy`: Para interação com banco de dados (caso o destino seja um banco de dados relacional).
-- `numpy`: Para operações numéricas.
+- `poetry`: Para gerenciamento das dependências.
+- `json`: Para trabalhar com arquivos JSON.
+- `glob`: Para encontrar arquivos em diretórios.
 
-Você pode instalar essas dependências usando o arquivo `requirements.txt`:
+Para instalar as dependências do projeto, utilize:
 
 ```bash
-pip install -r requirements.txt
+poetry install
 ```
 
 ## Contribuindo
 
-Sinta-se à vontade para contribuir para este projeto! Se você quiser sugerir melhorias, correções de bugs ou outras melhorias, basta abrir uma *issue* ou enviar um *pull request*.
+Sinta-se à vontade para contribuir para este projeto! Se você quiser sugerir melhorias, correções de bugs ou outras contribuições, basta abrir uma *issue* ou enviar um *pull request*.
 
 ## Licença
 
